@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delivery Optimization Engine — Ria Verma</title>
+  <meta name="description" content="Case study: building a route and DC assignment optimization engine that generated $30M in savings across 75 distribution centers." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf9f7;
+      --bg-card: #ffffff;
+      --bg-soft: #f3f1ec;
+      --bg-teal: #E1F5EE;
+      --text-primary: #1a1916;
+      --text-secondary: #5a5852;
+      --text-muted: #9a9890;
+      --border: rgba(26,25,22,0.10);
+      --border-mid: rgba(26,25,22,0.18);
+      --teal: #0F6E56;
+      --teal-dark: #085041;
+      --accent: #3C3489;
+      --accent-bg: #EEEDFE;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #141412;
+        --bg-card: #1e1d1b;
+        --bg-soft: #252320;
+        --bg-teal: #04342C;
+        --text-primary: #f0ede8;
+        --text-secondary: #a09d97;
+        --text-muted: #6a6760;
+        --border: rgba(240,237,232,0.10);
+        --border-mid: rgba(240,237,232,0.18);
+        --teal: #5DCAA5;
+        --teal-dark: #9FE1CB;
+        --accent: #AFA9EC;
+        --accent-bg: #26215C;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    nav a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    nav a:hover { color: var(--text-primary); }
+
+    .nav-sep {
+      font-size: 13px;
+      color: var(--text-muted);
+      opacity: 0.4;
+    }
+
+    .nav-current {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ── LAYOUT ── */
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 6rem;
+    }
+
+    /* ── HEADER ── */
+    .case-header {
+      margin-bottom: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-teal { background: var(--bg-teal); color: var(--teal); }
+    .badge-soft { background: var(--bg-soft); color: var(--text-secondary); border: 0.5px solid var(--border-mid); }
+
+    .case-title {
+      font-family: 'Lora', serif;
+      font-size: clamp(26px, 5vw, 38px);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+
+    .case-subtitle {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 620px;
+      margin-bottom: 24px;
+    }
+
+    .case-subtitle em {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      color: var(--text-primary);
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+    }
+
+    .stat-number {
+      font-family: 'Lora', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ── BODY SECTIONS ── */
+    .case-body {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .section { }
+
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px;
+    }
+
+    .section-heading {
+      font-family: 'Lora', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .prose {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .prose + .prose { margin-top: 12px; }
+
+    .prose strong {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* ── FLOW DIAGRAM ── */
+    .flow-section { }
+
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 4px;
+      position: relative;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 16px;
+      padding: 0 0 2rem 0;
+      position: relative;
+    }
+
+    .flow-step:last-child { padding-bottom: 0; }
+
+    .step-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .step-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-teal);
+      border: 1.5px solid var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--teal);
+      flex-shrink: 0;
+      z-index: 1;
+    }
+
+    .step-line {
+      width: 1px;
+      flex: 1;
+      background: var(--border-mid);
+      margin-top: 6px;
+    }
+
+    .flow-step:last-child .step-line { display: none; }
+
+    .step-right {
+      padding-top: 5px;
+      padding-bottom: 0;
+    }
+
+    .step-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 5px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .step-tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--bg-soft);
+      color: var(--text-muted);
+      border: 0.5px solid var(--border-mid);
+      margin-top: 7px;
+    }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: var(--bg-teal);
+      border-left: 2.5px solid var(--teal);
+      border-radius: 0 8px 8px 0;
+      padding: 1.1rem 1.4rem;
+      margin: 1.5rem 0;
+    }
+
+    .callout-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+
+    .callout p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      font-style: italic;
+      font-family: 'Lora', serif;
+    }
+
+    /* ── TECH STACK ── */
+    .tech-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tech-pill {
+      font-size: 13px;
+      padding: 5px 13px;
+      border-radius: 20px;
+      border: 0.5px solid var(--border-mid);
+      color: var(--text-secondary);
+      background: var(--bg-card);
+    }
+
+    /* ── TRADEOFFS TABLE ── */
+    .tradeoffs {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 12px;
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .tradeoff-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .tradeoff-row:last-child { border-bottom: none; }
+
+    .tradeoff-cell {
+      padding: 0.85rem 1rem;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .tradeoff-cell:first-child {
+      border-right: 0.5px solid var(--border);
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .tradeoff-header .tradeoff-cell {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--bg-soft);
+      padding: 0.6rem 1rem;
+    }
+
+    /* ── OUTCOME ── */
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .outcome-grid { grid-template-columns: 1fr; }
+    }
+
+    .outcome-card {
+      background: var(--bg-card);
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .outcome-icon {
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+
+    .outcome-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .outcome-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ── REFLECTIONS ── */
+    .reflection-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 12px;
+    }
+
+    .reflection-item {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .reflection-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+      margin-top: 8px;
+    }
+
+    .reflection-text {
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: var(--text-secondary);
+    }
+
+    .reflection-text strong {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* ── FOOTER NAV ── */
+    .footer-nav {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-nav a {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+
+    .footer-nav a:hover { color: var(--text-primary); }
+
+    .footer-nav svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 0.5px;
+      background: var(--border);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav aria-label="Breadcrumb">
+  <a href="index.html">Ria Verma</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Delivery Optimization Engine</span>
+</nav>
+
+<main class="page">
+
+  <!-- HEADER -->
+  <header class="case-header">
+    <div class="header-meta">
+      <span class="badge badge-teal">Case Study</span>
+      <span class="badge badge-soft">Supply Chain · Operations Research</span>
+      <span class="badge badge-soft">2023–2024</span>
+    </div>
+
+    <h1 class="case-title">Delivery Optimization Engine</h1>
+
+    <p class="case-subtitle">
+      Building a <em>mixed-integer optimization model</em> to reassign delivery routes and
+      distribution center allocations across a national retail network —
+      cutting costs by $30M annually without sacrificing service levels.
+    </p>
+
+    <div class="stats-row" role="list" aria-label="Key metrics">
+      <div class="stat-card" role="listitem">
+        <div class="stat-number">$30M</div>
+        <div class="stat-label">annual cost savings identified</div>
+      </div>
+      <div class="stat-card" role="listitem">
+        <div class="stat-number">75</div>
+        <div class="stat-label">distribution centers &amp; stores in scope</div>
+      </div>
+      <div class="stat-card" role="listitem">
+        <div class="stat-number">~40%</div>
+        <div class="stat-label">reduction in manual planning time</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- BODY -->
+  <div class="case-body">
+
+    <!-- CONTEXT -->
+    <section class="section" aria-labelledby="context-heading">
+      <p class="section-eyebrow">Background</p>
+      <h2 class="section-heading" id="context-heading">The problem with how deliveries were being planned</h2>
+      <p class="prose">
+        [EDIT: Describe the baseline state here. e.g. "Delivery routes and DC-to-store assignments were largely
+        static — set years earlier and never re-optimized as the network grew. Planners were making
+        manual adjustments in spreadsheets, often with incomplete visibility into total cost."]
+      </p>
+      <p class="prose">
+        The result was predictable: <strong>suboptimal DC assignments</strong>, redundant miles driven, and
+        no systematic way to ask "what's the cheapest way to serve this store given today's constraints?"
+        The opportunity was there — it just needed to be modeled.
+      </p>
+
+      <div class="callout">
+        <p class="callout-label">The core question</p>
+        <p>"Given our network of 75 distribution centers and stores, how should we assign each store
+        to a DC — and what delivery schedule — to minimize total cost while meeting all service constraints?"</p>
+      </div>
+    </section>
+
+    <!-- FLOW -->
+    <section class="section flow-section" aria-labelledby="flow-heading">
+      <p class="section-eyebrow">How it worked</p>
+      <h2 class="section-heading" id="flow-heading">End-to-end process</h2>
+
+      <div class="flow-steps">
+
+        <div class="flow-step">
+          <div class="step-left">
+            <div class="step-dot">1</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-right">
+            <p class="step-title">Data collection &amp; cleaning</p>
+            <p class="step-desc">
+              Pulled historical shipment records, DC capacity data, store demand patterns, and
+              carrier rate cards. [EDIT: Add your actual data sources here — ERP, TMS, etc.]
+              Significant effort went into reconciling mismatched store IDs and filling gaps
+              in carrier cost data.
+            </p>
+            <span class="step-tag">Python · SQL · [your data sources]</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-left">
+            <div class="step-dot">2</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-right">
+            <p class="step-title">Optimization model design</p>
+            <p class="step-desc">
+              Formulated the problem as a <strong>mixed-integer linear program (MILP)</strong>:
+              assign each store to exactly one DC, subject to capacity constraints,
+              service-level requirements, and carrier lane availability.
+              The objective was to minimize total landed cost across all lanes.
+              [EDIT: Add any notable constraints — e.g. frozen lanes, seasonal demand, multi-stop routes.]
+            </p>
+            <span class="step-tag">Gurobi · MILP formulation</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-left">
+            <div class="step-dot">3</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-right">
+            <p class="step-title">Scenario analysis &amp; sensitivity testing</p>
+            <p class="step-desc">
+              Ran the model across multiple scenarios — different cost assumptions,
+              network expansion plans, demand forecasts. Built a sensitivity layer so
+              stakeholders could ask "what if carrier rates increase 10%?" and get an answer in minutes,
+              not days. [EDIT: Add any specific scenarios that shaped the final recommendation.]
+            </p>
+            <span class="step-tag">Scenario modeling · what-if analysis</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-left">
+            <div class="step-dot">4</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-right">
+            <p class="step-title">Stakeholder translation &amp; validation</p>
+            <p class="step-desc">
+              Optimization output alone isn't a recommendation. Worked with operations and
+              finance teams to validate that the model's assignments were operationally feasible —
+              accounting for things the model couldn't see, like carrier relationship constraints
+              and union agreements.
+              [EDIT: Describe your specific stakeholder process and any surprises.]
+            </p>
+            <span class="step-tag">Stakeholder alignment · ops validation</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-left">
+            <div class="step-dot">5</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-right">
+            <p class="step-title">Delivery &amp; handoff</p>
+            <p class="step-desc">
+              [EDIT: Describe what was delivered — a dashboard, a report, a model that runs on a schedule,
+              a handoff to an ops team?] Final recommendations were packaged as an implementation
+              roadmap with phased rollout to reduce execution risk.
+            </p>
+            <span class="step-tag">[your delivery format]</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TRADEOFFS -->
+    <section class="section" aria-labelledby="tradeoffs-heading">
+      <p class="section-eyebrow">Technical decisions</p>
+      <h2 class="section-heading" id="tradeoffs-heading">Key tradeoffs &amp; why we made them</h2>
+
+      <div class="tradeoffs" role="table" aria-label="Technical tradeoffs">
+        <div class="tradeoff-row tradeoff-header" role="row">
+          <div class="tradeoff-cell" role="columnheader">Decision</div>
+          <div class="tradeoff-cell" role="columnheader">Reasoning</div>
+        </div>
+        <div class="tradeoff-row" role="row">
+          <div class="tradeoff-cell" role="cell">Gurobi over open-source solvers</div>
+          <div class="tradeoff-cell" role="cell">
+            At 75 nodes the problem size is manageable, but Gurobi's performance gap over CBC/GLPK
+            was significant enough to matter for scenario iteration speed. [EDIT: add your actual reason.]
+          </div>
+        </div>
+        <div class="tradeoff-row" role="row">
+          <div class="tradeoff-cell" role="cell">MILP over heuristics</div>
+          <div class="tradeoff-cell" role="cell">
+            We needed a provably optimal (or near-optimal) solution to justify the business case —
+            a heuristic "good enough" answer wouldn't hold up to finance scrutiny.
+          </div>
+        </div>
+        <div class="tradeoff-row" role="row">
+          <div class="tradeoff-cell" role="cell">[EDIT: add another decision]</div>
+          <div class="tradeoff-cell" role="cell">
+            [EDIT: describe the tradeoff you navigated — e.g. model complexity vs. runtime,
+            single-period vs. multi-period, etc.]
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUTCOMES -->
+    <section class="section" aria-labelledby="outcomes-heading">
+      <p class="section-eyebrow">Results</p>
+      <h2 class="section-heading" id="outcomes-heading">What it produced</h2>
+      <p class="prose" style="margin-bottom: 16px;">
+        [EDIT: 1–2 sentences on whether and how the recommendations were implemented.]
+      </p>
+
+      <div class="outcome-grid">
+        <div class="outcome-card">
+          <div class="outcome-title">$30M identified savings</div>
+          <div class="outcome-desc">
+            Across reassigned DC-to-store lanes and renegotiated carrier routes.
+            [EDIT: clarify — realized savings or opportunity?]
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-title">75 nodes optimized</div>
+          <div class="outcome-desc">
+            Full network in scope — DCs and stores — with no manual adjustments required post-solve.
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-title">Reusable model</div>
+          <div class="outcome-desc">
+            [EDIT: Was it productionized? Does a team run it quarterly? Or was it a one-time study?]
+          </div>
+        </div>
+        <div class="outcome-card">
+          <div class="outcome-title">Faster scenario planning</div>
+          <div class="outcome-desc">
+            What previously took days of spreadsheet work could be re-run in minutes with new inputs.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REFLECTIONS -->
+    <section class="section" aria-labelledby="reflections-heading">
+      <p class="section-eyebrow">Looking back</p>
+      <h2 class="section-heading" id="reflections-heading">What I learned</h2>
+
+      <div class="reflection-list">
+        <div class="reflection-item">
+          <div class="reflection-bullet"></div>
+          <p class="reflection-text">
+            <strong>The model is 20% of the work.</strong> Getting clean, trustworthy data
+            and getting stakeholders to trust the output took far more time than the optimization itself.
+            [EDIT: adjust to your experience.]
+          </p>
+        </div>
+        <div class="reflection-item">
+          <div class="reflection-bullet"></div>
+          <p class="reflection-text">
+            <strong>Explainability matters more than optimality.</strong> A recommendation that
+            operations can understand and push back on is worth more than a tighter objective value
+            that no one will implement. [EDIT: did you build any explainability tooling?]
+          </p>
+        </div>
+        <div class="reflection-item">
+          <div class="reflection-bullet"></div>
+          <p class="reflection-text">
+            <strong>[EDIT: add your own reflection]</strong> — something that surprised you,
+            something you'd do differently, or a lesson that generalizes beyond this project.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH STACK -->
+    <section class="section" aria-labelledby="stack-heading">
+      <p class="section-eyebrow">Stack</p>
+      <h2 class="section-heading" id="stack-heading">Tools &amp; technologies</h2>
+      <div class="tech-grid">
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Gurobi</span>
+        <span class="tech-pill">Pandas</span>
+        <span class="tech-pill">SQL</span>
+        <span class="tech-pill">[your BI tool]</span>
+        <span class="tech-pill">[your data source / ERP]</span>
+        <span class="tech-pill">[add more]</span>
+      </div>
+    </section>
+
+  </div><!-- /case-body -->
+
+  <!-- FOOTER NAV -->
+  <nav class="footer-nav" aria-label="Page navigation">
+    <a href="index.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to portfolio
+    </a>
+    <a href="mailto:your@email.com">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Questions? Get in touch
+    </a>
+  </nav>
+
+</main>
+
+</body>
+</html>

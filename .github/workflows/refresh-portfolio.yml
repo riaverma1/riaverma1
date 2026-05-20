@@ -1,0 +1,50 @@
+# .github/workflows/refresh-portfolio.yml
+#
+# Runs on the 1st of every month at 9am UTC.
+# Reads READMEs + recent commits from all your public repos,
+# asks Claude to rewrite project cards and small-builds list,
+# then commits the updated index.html back to the repo.
+#
+# Required secret: ANTHROPIC_API_KEY
+# (Settings → Secrets and variables → Actions → New repository secret)
+
+name: Refresh portfolio
+
+on:
+  schedule:
+    - cron: "0 9 1 * *"   # 1st of each month, 9:00 UTC
+  workflow_dispatch:        # also allows manual trigger from Actions tab
+
+permissions:
+  contents: write           # needed to commit index.html back
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests openai
+
+      - name: Run portfolio refresh script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # auto-provided by Actions
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_USERNAME: riaverma1
+        run: python scripts/refresh_portfolio.py
+
+      - name: Commit updated index.html
+        run: |
+          git config user.name  "portfolio-bot"
+          git config user.email "actions@github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "chore: monthly portfolio refresh $(date +'%Y-%m')"
+          git push
