@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>README Mockups</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #f6f8fa;
+    padding: 40px 20px;
+    color: #1f2328;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #57606a;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .mockup-wrap {
+    margin-bottom: 60px;
+  }
+  /* GitHub README container */
+  .gh-box {
+    background: #ffffff;
+    border: 1px solid #d1d9e0;
+    border-radius: 6px;
+    padding: 32px 40px 40px;
+    max-width: 860px;
+  }
+  /* ── GitHub markdown resets ── */
+  .gh-box h1 { font-size: 2em; font-weight: 600; border-bottom: 1px solid #d1d9e0; padding-bottom: 0.3em; margin-bottom: 16px; margin-top: 0; }
+  .gh-box h2 { font-size: 1.5em; font-weight: 600; border-bottom: 1px solid #d1d9e0; padding-bottom: 0.3em; margin: 24px 0 16px; }
+  .gh-box h3 { font-size: 1.25em; font-weight: 600; margin: 20px 0 12px; }
+  .gh-box p { margin-bottom: 16px; }
+  .gh-box a { color: #0969da; text-decoration: none; }
+  .gh-box a:hover { text-decoration: underline; }
+  .gh-box hr { border: none; border-top: 1px solid #d1d9e0; margin: 24px 0; }
+  .gh-box ul { padding-left: 2em; margin-bottom: 16px; }
+  .gh-box li { margin-bottom: 4px; }
+  .gh-box table { border-collapse: collapse; width: 100%; margin-bottom: 16px; display: table; }
+  .gh-box th { background: #f6f8fa; font-weight: 600; padding: 6px 13px; border: 1px solid #d1d9e0; }
+  .gh-box td { padding: 6px 13px; border: 1px solid #d1d9e0; }
+  .gh-box tr:nth-child(2n) td { background: #f6f8fa; }
+  .gh-box code { background: #afb8c133; border-radius: 6px; padding: 0.2em 0.4em; font-family: monospace; font-size: 0.9em; }
+  .gh-box strong { font-weight: 600; }
+  .gh-box em { font-style: italic; }
+  .gh-box blockquote { border-left: 4px solid #d1d9e0; padding: 0 16px; color: #57606a; margin: 0 0 16px; }
+
+  /* badge pills */
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    margin: 2px 3px 2px 0;
+    line-height: 20px;
+  }
+  .badge-blue { background: #ddf4ff; color: #0550ae; border: 1px solid #54aeff66; }
+  .badge-green { background: #dafbe1; color: #116329; border: 1px solid #4ac26b66; }
+  .badge-purple { background: #fbefff; color: #6e40c9; border: 1px solid #d8b9ff66; }
+  .badge-orange { background: #fff1e5; color: #953800; border: 1px solid #ffa657; }
+  .badge-gray { background: #f6f8fa; color: #57606a; border: 1px solid #d1d9e0; }
+
+  /* stat card simulation */
+  .stat-card {
+    display: inline-block;
+    border: 1px solid #d1d9e0;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 0 8px 8px 0;
+    font-size: 13px;
+    vertical-align: top;
+    min-width: 180px;
+  }
+  .stat-card .stat-num { font-size: 28px; font-weight: 700; color: #1f2328; display: block; }
+  .stat-card .stat-label { color: #57606a; font-size: 12px; }
+
+  /* work table row hover */
+  .gh-box tr:hover td { background: #f6f8fa; }
+
+  /* option A: two-col header */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px; }
+  .two-col-left { }
+  .two-col-right { display: flex; flex-direction: column; gap: 10px; }
+
+  /* open to work pill */
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #dafbe1; color: #116329;
+    border: 1px solid #4ac26b66;
+    border-radius: 20px; padding: 4px 12px;
+    font-size: 13px; font-weight: 500;
+  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #2da44e; flex-shrink: 0; }
+
+  .divider-label {
+    font-size: 11px; font-weight: 600; color: #57606a;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin: 24px 0 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     OPTION A — Minimal editorial
+══════════════════════════════════════════════════════ -->
+<div class="mockup-wrap" id="optionA">
+  <div class="label">Option A — Minimal editorial</div>
+  <div class="gh-box">
+
+    <h1>Ria Verma</h1>
+    <p>Senior Data Scientist building AI systems for <strong>supply chain &amp; operations</strong>.<br>
+    MIT SCM '24 &nbsp;·&nbsp; ex-Microsoft &nbsp;·&nbsp; New York City</p>
+
+    <span class="status-pill"><span class="status-dot"></span> Open to new roles</span>
+
+    <hr>
+
+    <h2>Selected work</h2>
+    <table>
+      <thead><tr><th>Project</th><th>What it is</th><th>Link</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Delivery Optimization Engine</strong></td><td>Route optimization across 75 DCs · $30M in savings</td><td><a href="#">case study →</a></td></tr>
+        <tr><td><strong>MIT RAG Chatbot</strong></td><td>Retrieval-augmented generation system · published paper</td><td><a href="#">paper →</a></td></tr>
+        <tr><td><strong>Workout Companion</strong></td><td>AI-powered workout tracking app with YouTube parsing</td><td><a href="#">repo →</a></td></tr>
+        <tr><td><strong>Apartment Scanner</strong></td><td>Chrome extension scraping rental listings across platforms</td><td><a href="#">repo →</a></td></tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <p>
+      <a href="#">LinkedIn</a> &nbsp;·&nbsp;
+      <a href="#">rverma213@gmail.com</a> &nbsp;·&nbsp;
+      <a href="#">Resume</a>
+    </p>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     OPTION B — Lead with the headline result
+══════════════════════════════════════════════════════ -->
+<div class="mockup-wrap" id="optionB">
+  <div class="label">Option B — Lead with the headline result</div>
+  <div class="gh-box">
+
+    <blockquote>
+      <p>I built a route optimization engine that generated <strong>$30M in annual savings</strong> across 75 distribution centers. Here's the rest of the work.</p>
+    </blockquote>
+
+    <p>
+      <strong>Ria Verma</strong> — Senior Data Scientist, AI &amp; supply chain.<br>
+      MIT SCM '24 · ex-Microsoft · NYC &nbsp;&nbsp;
+      <span class="status-pill"><span class="status-dot"></span> Open to roles</span>
+    </p>
+
+    <hr>
+
+    <h2>Work</h2>
+
+    <p><strong><a href="#">Delivery Optimization Engine</a></strong> <span class="badge badge-purple">Case study</span><br>
+    Gurobi-based route and DC assignment optimizer deployed across a national retail network. Full writeup with methodology and results.</p>
+
+    <p><strong><a href="#">MIT RAG Chatbot</a></strong> <span class="badge badge-blue">Research</span><br>
+    Retrieval-augmented generation system for SCM knowledge queries, built during my master's. Paper published.</p>
+
+    <p><strong><a href="#">Workout Companion</a></strong> <span class="badge badge-green">Live app</span><br>
+    AI workout tracker — parses YouTube videos into structured workout plans, syncs with Supabase, mobile + web.</p>
+
+    <p><strong><a href="#">Apartment Scanner</a></strong> <span class="badge badge-gray">Tool</span><br>
+    Chrome extension that scrapes rental listings across platforms into a single view.</p>
+
+    <hr>
+    <p><a href="#">LinkedIn</a> · <a href="#">rverma213@gmail.com</a> · <a href="#">Resume</a></p>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     OPTION C — Skills + stats heavy
+══════════════════════════════════════════════════════ -->
+<div class="mockup-wrap" id="optionC">
+  <div class="label">Option C — Skills &amp; stats (badges-forward)</div>
+  <div class="gh-box">
+
+    <h1>Hi, I'm Ria 👋</h1>
+    <p>Senior Data Scientist · AI systems for supply chain &amp; operations · MIT SCM '24 · ex-Microsoft · NYC</p>
+    <p><span class="status-pill"><span class="status-dot"></span> Open to new roles — Series A–C startups</span></p>
+
+    <hr>
+
+    <div class="divider-label">Stack</div>
+    <div>
+      <span class="badge badge-blue">Python</span>
+      <span class="badge badge-blue">SQL</span>
+      <span class="badge badge-blue">PyTorch</span>
+      <span class="badge badge-blue">LangChain</span>
+      <span class="badge badge-green">Gurobi</span>
+      <span class="badge badge-green">NetworkX</span>
+      <span class="badge badge-purple">React</span>
+      <span class="badge badge-purple">TypeScript</span>
+      <span class="badge badge-orange">Supabase</span>
+      <span class="badge badge-orange">Cloudflare Workers</span>
+    </div>
+
+    <div class="divider-label" style="margin-top:20px">GitHub stats</div>
+    <div>
+      <div class="stat-card">
+        <span class="stat-num">4</span>
+        <span class="stat-label">Public repos</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">$30M</span>
+        <span class="stat-label">Optimization savings (best project)</span>
+      </div>
+    </div>
+
+    <hr>
+
+    <h2>Featured projects</h2>
+    <ul>
+      <li><a href="#">Delivery Optimization Engine</a> — route optimizer across 75 DCs · <strong>$30M savings</strong> · <a href="#">case study</a></li>
+      <li><a href="#">MIT RAG Chatbot</a> — SCM knowledge retrieval system · <a href="#">paper</a></li>
+      <li><a href="#">Workout Companion</a> — AI workout tracker · live app · <a href="#">repo</a></li>
+      <li><a href="#">Apartment Scanner</a> — rental listing aggregator Chrome extension · <a href="#">repo</a></li>
+    </ul>
+
+    <hr>
+    <p><a href="#">LinkedIn</a> · <a href="#">rverma213@gmail.com</a> · <a href="#">Resume</a></p>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     OPTION D — Narrative / first-person voice
+══════════════════════════════════════════════════════ -->
+<div class="mockup-wrap" id="optionD">
+  <div class="label">Option D — Narrative, first-person voice</div>
+  <div class="gh-box">
+
+    <h1>Ria Verma</h1>
+
+    <p>I'm a Senior Data Scientist focused on AI systems for supply chain and operations. Most recently I built a <a href="#">route optimization engine</a> that generated $30M in annual savings across a 75-DC network — the full writeup is linked.</p>
+
+    <p>Before that I was at Microsoft, and before that I did an <a href="#">SCM master's at MIT</a> where I published a paper on retrieval-augmented generation for logistics queries.</p>
+
+    <p>Right now I'm working on a <a href="#">workout companion app</a> — it parses YouTube videos into structured plans and syncs across mobile and web. I also built a <a href="#">Chrome extension</a> that aggregates rental listings across platforms.</p>
+
+    <p>I'm looking for roles at Series A–C startups where I can work on hard problems end-to-end. Based in NYC.</p>
+
+    <p>
+      <span class="status-pill"><span class="status-dot"></span> Open to new roles</span>
+    </p>
+
+    <hr>
+
+    <p>
+      <a href="#">LinkedIn</a> &nbsp;·&nbsp;
+      <a href="#">rverma213@gmail.com</a> &nbsp;·&nbsp;
+      <a href="#">Resume</a>
+    </p>
+
+  </div>
+</div>
+
+</body>
+</html>
