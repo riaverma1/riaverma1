@@ -8,9 +8,9 @@ The projects that made it are below. So is the graveyard.
 
 ### Stack
 
-| Languages | ML / Optimization | Infra & Tools |
-|---|---|---|
-| Python · SQL | PyTorch · LangChain · Gurobi | Supabase · Cloudflare · React |
+| AI | Infra & Tools |
+|---|---|
+| LangChain | Supabase · Cloudflare · React · Vercel · Render  |
 
 ---
 
@@ -21,7 +21,6 @@ The projects that made it are below. So is the graveyard.
 | **Delivery Optimization Engine** | Route optimization across 75 DCs · $30M in savings | ![case study](https://img.shields.io/badge/case%20study-7c3aed?style=flat-square) | [case study →](https://riaverma1.github.io/case-study-delivery.html) |
 | **MIT RAG Chatbot** | RAG system for SCM knowledge queries · published paper | ![research](https://img.shields.io/badge/research-0969da?style=flat-square) | [paper →](#) |
 | **Tempo** | AI workout tracker — parses YouTube videos into interval timers · mobile + web | ![live app](https://img.shields.io/badge/live%20app-2da44e?style=flat-square) | [repo →](https://github.com/riaverma1/workout-app) |
-| **Apartment Scanner** | Chrome extension aggregating rental listings across platforms | ![tool](https://img.shields.io/badge/tool-57606a?style=flat-square) | [repo →](https://github.com/riaverma1/apartment-scanner) |
 
 ---
 
@@ -29,15 +28,14 @@ The projects that made it are below. So is the graveyard.
 
 *Every project here taught me something. Some of them taught me a lot.*
 
-| What I was building | What didn't work | What I took from it |
-|---|---|---|
-| **[workout-companion-pro](https://github.com/riaverma1/workout-companion-pro)** | Rewrote the workout app in TanStack Start before the first version even shipped | Pick a stack and finish before switching |
-| **YouTube scraper v1–v4** | yt-dlp worked locally, got bot-blocked on every cloud provider I tried | Learned enough about TLS fingerprinting and browser impersonation to eventually fix it with `curl_cffi` |
+| What I was building | Description | What didn't work | Learnings |
+|---|---|---|---|
+| **[apartment-scanner](https://github.com/riaverma1/apartment-scanner)** | NYC apartment hunting is competitive. I tried to build a chrome extension (using a webhook) to track new apartment sublease listings on FaceBook that met my requirements | 
+FaceBook restricts "crawlers" and prevents "listening" for specific posts so I couldn't trigger automatic alerts | "live" posting is difficult to track. If you don't _need_ the data immediately, opt for batching instead. Pivoted to batching posts daily with automated email alerts and filtering through LLM |
 
-See the full ReadMe for all my learnings.
 ---
 
-Senior Data Scientist building AI systems for supply chain & operations.  
-MIT SCM '24 · ex-Microsoft · New York City · 🟢 Open to new roles
+Senior Data Scientist building AI systems for optimization, operations, and people. 
+MIT SCM '24 · ex-Microsoft · New York City 
 
 [LinkedIn](#) · [rverma213@gmail.com](mailto:rverma213@gmail.com) 
