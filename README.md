@@ -37,7 +37,4 @@ The projects that made it are below. So is the graveyard.
 
 ---
 
-Senior Data Scientist building AI systems for optimization, operations, and people. 
-MIT SCM '24 · New York City 
-
 [LinkedIn](#) · [rverma213@gmail.com](mailto:rverma213@gmail.com) 
