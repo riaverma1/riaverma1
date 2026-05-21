@@ -1,11 +1,8 @@
 ## Hi, I'm Ria 👋
 
-I love building things. A lot of them break, stall, or get quietly shelved when I realize I architected myself into a corner.
+I like building things that feel useful, and the creative process on the way.
 
-The ones that made it are below. So is the graveyard.
-
-Senior Data Scientist building AI systems for supply chain & operations.  
-MIT SCM '24 · ex-Microsoft · New York City · 🟢 Open to new roles
+The projects that made it are below. So is the graveyard.
 
 ---
 
@@ -17,7 +14,7 @@ MIT SCM '24 · ex-Microsoft · New York City · 🟢 Open to new roles
 
 ---
 
-### Things that shipped ✓
+### Featured Projects ✓
 
 | Project | What | Type | Link |
 |---|---|---|---|
@@ -28,7 +25,7 @@ MIT SCM '24 · ex-Microsoft · New York City · 🟢 Open to new roles
 
 ---
 
-### 🪦 Repo graveyard
+### 🪦 Project graveyard
 
 *Every project here taught me something. Some of them taught me a lot.*
 
@@ -37,6 +34,10 @@ MIT SCM '24 · ex-Microsoft · New York City · 🟢 Open to new roles
 | **[workout-companion-pro](https://github.com/riaverma1/workout-companion-pro)** | Rewrote the workout app in TanStack Start before the first version even shipped | Pick a stack and finish before switching |
 | **YouTube scraper v1–v4** | yt-dlp worked locally, got bot-blocked on every cloud provider I tried | Learned enough about TLS fingerprinting and browser impersonation to eventually fix it with `curl_cffi` |
 
+See the full ReadMe for all my learnings.
 ---
 
-[LinkedIn](#) · [rverma213@gmail.com](mailto:rverma213@gmail.com) · [Resume](#)
+Senior Data Scientist building AI systems for supply chain & operations.  
+MIT SCM '24 · ex-Microsoft · New York City · 🟢 Open to new roles
+
+[LinkedIn](#) · [rverma213@gmail.com](mailto:rverma213@gmail.com) 
