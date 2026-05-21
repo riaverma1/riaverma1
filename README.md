@@ -29,7 +29,7 @@ The projects that made it are below. So is the graveyard.
 
 *Every project here taught me something. Some of them taught me a lot.*
 
-| What I was building | Cause of death | What I took from it |
+| What I was building | What didn't work | What I took from it |
 |---|---|---|
 | **[workout-companion-pro](https://github.com/riaverma1/workout-companion-pro)** | Rewrote the workout app in TanStack Start before the first version even shipped | Pick a stack and finish before switching |
 | **YouTube scraper v1–v4** | yt-dlp worked locally, got bot-blocked on every cloud provider I tried | Learned enough about TLS fingerprinting and browser impersonation to eventually fix it with `curl_cffi` |
