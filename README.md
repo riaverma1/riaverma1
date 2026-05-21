@@ -18,9 +18,12 @@ The projects that made it are below. So is the graveyard.
 
 | Project | What | Type | Link |
 |---|---|---|---|
-| **Delivery Optimization Engine** | Route optimization across 75 DCs · $30M in savings | ![case study](https://img.shields.io/badge/case%20study-7c3aed?style=flat-square) | [case study →](https://riaverma1.github.io/riaverma1/case-study-delivery.html) |
 | **RAG Chatbot for Pharmaceutical Company** | Topic: building AI agents for knowledge workers · published in top supply chain journal | ![research](https://img.shields.io/badge/research-0969da?style=flat-square) | [paper →](https://www.scmr.com/article/harnessing_generative_ai_for_smarter_supplier_negotiations) |
-| **Tempo** AI workout tracker | Parses YouTube workouts into interval timers · computer vision to detect which exercises are in the frame · deployed web app | ![live app](https://img.shields.io/badge/live%20app-2da44e?style=flat-square) | [repo →](https://github.com/riaverma1/workout-app) |
+| **Tempo** <br> AI workout tracker | Parses YouTube workouts into interval timers. Uses computer vision to detect which exercises are in the frame | ![deployed app](https://img.shields.io/badge/deployed%20app-2da44e?style=flat-square) | [repo →](https://github.com/riaverma1/workout-app) |
+
+<!-- IN PROGRESS
+| **Delivery Optimization Engine** | Production-scale vehicle routing optimization engine for last-mile delivery across Kroger's 75 DCs | ![case study](https://img.shields.io/badge/case%20study-7c3aed?style=flat-square) | [case study →](https://riaverma1.github.io/riaverma1/case-study-delivery.html) | 
+-->
 
 ---
 
