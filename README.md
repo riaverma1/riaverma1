@@ -1,6 +1,6 @@
 ## Hi, I'm Ria 👋
 
-I like building things that feel useful, and being creative along the way.
+I like building things that feel useful.
 
 The projects that made it are below. So is the graveyard.
 
