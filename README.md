@@ -16,14 +16,15 @@ The projects that made it are below. So is the graveyard.
 
 ### Featured Projects ✓
 
-| Project | What | Type | Link |
+| Project | What | Type | Link(s) |
 |---|---|---|---|
-| **BrewDesk** <br> Finding next workspace between meetings. | A WFH coffee shop finder web app — a Google Maps interface that shows laptop-friendly coffee shops with wifi/outlets/WFH scores. | ![deployed app](https://img.shields.io/badge/deployed%20app-2da44e?style=flat-square) | [repo →](https://github.com/riaverma1/brew-desk) |
+| **BrewDesk** <br> Finding next workspace between meetings. | A WFH coffee shop finder web app — a Google Maps interface that shows laptop-friendly coffee shops with wifi/outlets/WFH scores. | ![deployed app](https://img.shields.io/badge/deployed%20app-2da44e?style=flat-square) | [app →](https://brew-desk.vercel.app) [repo →](https://github.com/riaverma1/brew-desk)|
 | **RAG Chatbot for Pharmaceutical Company** | Topic: building AI agents for knowledge workers · published in top supply chain journal | ![case study](https://img.shields.io/badge/case%20study-0969da?style=flat-square) | [paper →](https://www.scmr.com/article/harnessing_generative_ai_for_smarter_supplier_negotiations) |
-| **Tempo** <br> AI workout tracker | Parses YouTube workouts into interval timers. Uses computer vision to detect which exercises are in the frame | ![deployed app](https://img.shields.io/badge/deployed%20app-2da44e?style=flat-square) | [repo →](https://github.com/riaverma1/workout-app) |
 | **NuevoFoundation** <br> Supply Chain Analytics Workshop | Workshop to teach first-gen students about optimization science | ![non-profit](https://img.shields.io/badge/nonprofit-2da44e?style=flat-square) | [repo →](https://github.com/NuevoFoundation/workshops/tree/master/content/english/supply-chain-analytics) |
 
 <!-- IN PROGRESS
+| **Tempo** <br> AI workout tracker | Parses YouTube workouts into interval timers. Uses computer vision to detect which exercises are in the frame | ![deployed app](https://img.shields.io/badge/deployed%20app-2da44e?style=flat-square) | [repo →](https://github.com/riaverma1/workout-app) |
+
 | **Delivery Optimization Engine** | Production-scale vehicle routing optimization engine for last-mile delivery across Kroger's 75 DCs | ![case study](https://img.shields.io/badge/case%20study-7c3aed?style=flat-square) | [case study →](https://riaverma1.github.io/riaverma1/case-study-delivery.html) | 
 -->
 
