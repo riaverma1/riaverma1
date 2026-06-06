@@ -36,7 +36,7 @@ The projects that made it are below. So is the graveyard.
 
 | What I was building | What didn't work | Learnings |
 |---|---|---|
-| **[apartment-scanner](https://github.com/riaverma1/apartment-scanner)** NYC apartment hunting is competitive. I tried to build a Chrome extension (using a webhook) to track new apartment sublease listings on Facebook that met my requirements | Facebook restricts "crawlers" and prevents "listening" for specific posts, so I couldn't trigger automatic alerts | "Live" posting is difficult to track. If you don't _need_ the data immediately, opt for batching instead. Pivoted to batching posts daily with automated email alerts and filtering through an LLM |
+| **apartment-scanner:** NYC apartment hunting is competitive. I tried to build a Chrome extension (using a webhook) to track new apartment sublease listings on Facebook that met my requirements | Facebook restricts "crawlers" and prevents "listening" for specific posts, so I couldn't trigger automatic alerts | "Live" posting is difficult to track. If you don't _need_ the data immediately, opt for batching instead. Pivoted to batching posts daily with automated email alerts and filtering through an LLM |
 
 ---
 
