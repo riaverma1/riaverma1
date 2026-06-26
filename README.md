@@ -9,7 +9,7 @@ I like building things that feel useful.
 ### Some of the Stack
 
 | AI, Infra, & Tools |
-|---|---|
+|---|
 | LangGraph · Supabase · Cloudflare · React Native · Vercel · Render · Docker · PostgreSQL · PostgreSQL |
 
 
