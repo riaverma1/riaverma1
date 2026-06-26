@@ -1,4 +1,4 @@
-# Relay: Autonomous GitHub Coding Agent - Product Requirements Document
+# agent-relay: Autonomous GitHub Coding Agent - Product Requirements Document
 
 ## Executive Summary
 
