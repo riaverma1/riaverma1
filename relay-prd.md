@@ -1,8 +1,8 @@
-# Jarvis: Autonomous GitHub Coding Agent - Product Requirements Document
+# Relay: Autonomous GitHub Coding Agent - Product Requirements Document
 
 ## Executive Summary
 
-Jarvis is an autonomous coding agent that monitors GitHub issues, writes code to address them, and creates pull requests for human review. It provides 24/7 automated software development assistance while maintaining human oversight through mandatory review gates.
+Relay is an autonomous coding agent that monitors GitHub issues, writes code to address them, and creates pull requests for human review. It provides 24/7 automated software development assistance while maintaining human oversight through mandatory review gates.
 
 ## Table of Contents
 1. [User Overview](#user-overview)
@@ -20,8 +20,8 @@ Jarvis is an autonomous coding agent that monitors GitHub issues, writes code to
 
 ### What It Does (Layman's Terms)
 
-Jarvis is like having a junior developer who:
-1. **Watches your GitHub issues** - Automatically detects when you create issues tagged with `jarvis_test`
+Relay is like having a junior developer who:
+1. **Watches your GitHub issues** - Automatically detects when you create issues tagged with `relay_test`
 2. **Writes code to fix them** - Uses AI (Claude) to understand the issue and write appropriate code
 3. **Creates pull requests** - Makes a draft PR with the changes for you to review
 4. **Never merges automatically** - All changes require human approval before going live
@@ -29,9 +29,9 @@ Jarvis is like having a junior developer who:
 
 ### User Workflow
 1. Create a GitHub issue describing what you want built
-2. Tag it with `jarvis_test` label
-3. Wait 30-60 seconds for Jarvis to pick it up
-4. Jarvis creates a branch, writes code, runs tests, and makes a draft PR
+2. Tag it with `relay_test` label
+3. Wait 30-60 seconds for Relay to pick it up
+4. Relay creates a branch, writes code, runs tests, and makes a draft PR
 5. Review the PR - approve, request changes, or close
 6. Merge manually when satisfied
 
@@ -57,7 +57,7 @@ Jarvis is like having a junior developer who:
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   GitHub        │    │    Jarvis        │    │   PostgreSQL    │
+│   GitHub        │    │    Relay        │    │   PostgreSQL    │
 │                 │    │   Supervisor     │    │                 │
 │ • Issues        │◄──►│ • Task Queue     │◄──►│ • Task State    │
 │ • Pull Requests │    │ • Claude Worker  │    │ • Audit Trail   │
@@ -77,7 +77,7 @@ Jarvis is like having a junior developer who:
 
 #### 1. GitHub Issue Monitor (`control_plane/issue_monitor.py`)
 - **Purpose**: Polls GitHub API every 60 seconds for new issues
-- **Triggers**: Issues with `jarvis_test` label
+- **Triggers**: Issues with `relay_test` label
 - **Actions**: Creates task in database, auto-starts execution
 - **Trade-off**: Polling vs webhooks (see Architecture Decisions)
 
@@ -95,7 +95,7 @@ Jarvis is like having a junior developer who:
 
 #### 4. PR Monitor (`control_plane/monitor.py`)
 - **Purpose**: Watches for human decisions on draft PRs
-- **Detection**: Monitors PR comments for `/jarvis` commands
+- **Detection**: Monitors PR comments for `/relay` commands
 - **Integration**: Resumes workflows based on human feedback
 
 #### 5. Database Layer (`control_plane/db.py`)
@@ -413,7 +413,7 @@ Setup:
   1. Create Oracle Cloud account (credit card required for verification)
   2. Create ARM-based compute instance
   3. Install Docker and Docker Compose
-  4. Deploy Jarvis stack
+  4. Deploy Relay stack
   5. Configure domain/DNS (optional)
 
 Cost: $0/month forever (Oracle's commitment)
@@ -468,7 +468,7 @@ Forever Free Resources:
   Database: Autonomous Database options available
 
 Perfect for:
-  Running Jarvis 24/7 at zero cost
+  Running Relay 24/7 at zero cost
   Learning and development
   Small team usage (1-10 developers)
 
@@ -502,12 +502,12 @@ GITHUB_TOKEN=your_github_app_token
 GITHUB_REPO=your_org/your_repo
 
 # Database (managed service recommended)
-JARVIS_DSN=postgresql://user:pass@prod-db:5432/jarvis
+JARVIS_DSN=postgresql://user:pass@prod-db:5432/relay
 
 # Email Notifications
 NOTIFICATION_EMAIL=alerts@company.com
 SMTP_SERVER=smtp.company.com
-SMTP_USERNAME=jarvis@company.com
+SMTP_USERNAME=relay@company.com
 SMTP_PASSWORD=app_password
 
 # Operational Settings
@@ -591,7 +591,7 @@ sequenceDiagram
     participant Database
     participant EmailSystem
 
-    User->>GitHub: Create issue with 'jarvis_test' label
+    User->>GitHub: Create issue with 'relay_test' label
 
     loop Every 60 seconds
         IssueMonitor->>GitHub: Poll for new labeled issues
@@ -638,7 +638,7 @@ sequenceDiagram
 
 #### 1. Issue Detection (30-60 second latency)
 - Issue monitor polls GitHub API
-- Filters for `jarvis_test` labeled issues
+- Filters for `relay_test` labeled issues
 - Creates database task record
 - Triggers immediate execution (if auto-run enabled)
 
